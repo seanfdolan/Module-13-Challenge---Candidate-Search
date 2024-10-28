@@ -1,50 +1,40 @@
-import { useLocation } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 
 const Nav = () => {
-
-  const navLinks = [
-    {
-      name: 'CandidateSearch',
-      url: '/candidate-search',
-    },
-    {
-      name: 'SavedCandidates',
-      url: '/saved-candidates',
-    }
-  ];
+  // TODO: Add necessary code to display the navigation bar and link between the pages
+  const currentPage = useLocation().pathname;
 
   return (
     <nav>
-      <ul>
-        {navLinks.map((link) => (
-          <li key={link.url}>
-            <Link to={link.url} className={currentPage === link.url ? 'active' : ''}>
-              {link.name}
+      <ul className='nav nav-tabs'>
+        <li className='nav-item'>
+          <h2>
+            <Link
+              to='/'
+              className={currentPage === '/' ? 'nav-link active' : 'nav-link'}
+            >
+              Home
             </Link>
-          </li>
-        ))}
+           </h2>
+        </li>
+        <li className='nav-item'>
+          <h2>
+            <Link
+              to='/SavedCandidates'
+              className={currentPage === '/SavedCandidates' ? 'nav-link active' : 'nav-link'}
+            >
+              Potential Candidates
+            </Link>
+          </h2>
+        </li>
       </ul>
     </nav>
   );
-  // TODO: Add necessary code to display the navigation bar and link between the pages
-  // const navLinks = [
-  //   {
-  //     name: 'CandidateSearch',
-  //     url: '/candidate-search',
-  //   },
-  //   {
-  //     name: 'SavedCandidates',
-  //     url: '/saved-candidates',
-  //   }
-  // ];
+}
 
-  const currentPage = useLocation().pathname;
-
-
-  return (
-    <div>Nav</div>
-  );
-};
+//   return (
+//     <div>Nav</div>
+//   );
+// };
 
 export default Nav;
