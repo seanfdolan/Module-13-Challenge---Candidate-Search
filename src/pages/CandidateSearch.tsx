@@ -1,13 +1,57 @@
-import { useState, useEffect } from 'react';
-import { searchGithub, searchGithubUser } from '../api/API';
+// const CandidateSearch = () => {
+//   return <h1>CandidateSearch</h1>;
+// };
+
+// export default CandidateSearch;
+
+
+import { useState } from 'react';
+import { searchGithub } from '../api/API';
+// import CandidateCard from '../components/candidateCard';
+// import type Candidate from '../interfaces/Candidate.interface';
 
 const CandidateSearch = () => {
-  return <h1>CandidateSearch</h1>;
+  const [currentCandidate, setCurrentCandidate] = useState<Candidate>({
+    avatar: '',
+    username: '',
+    location: '',
+    email: '',
+    company: '',
+    html_url: '',
+  });
+
+  const addToPotentialCandidates = () => {
+    let parsedPotentialCandidates: Candidate[] = [];
+    const storedPotentialCandidates = localStorage.getItem('potentialCandidates');
+    if (typeof storedPotentialCandidates === 'string') {
+      parsedPotentialCandidates = JSON.parse(storedPotentialCandidates);
+    }
+    parsedPotentialCandidates.push(currentCandidate);
+    localStorage.setItem('potentialCandidates', JSON.stringify(parsedPotentialCandidates));
+  };
+
+  const searchForCandidate = async () => {
+    const data: Candidate = await searchGithub();
+    setCurrentCandidate(data);
+  };
+
+  return (
+    <>
+      <h1>CandidateSearch</h1>
+      <section className='table'>
+        <div
+          onLoad={() =>
+            searchForCandidate
+          }
+        >
+        </div>
+      </section>
+      <CandidateCard
+        currentCandidate={currentCandidate}
+        addToSavedCandidates={addToPotentialCandidates}
+      />
+    </>
+  );
 };
 
-<button>
-  Subtract
-</button>
 export default CandidateSearch;
-
-
