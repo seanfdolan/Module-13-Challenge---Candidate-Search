@@ -8,53 +8,80 @@
 //     html_url: string | null;
 // }
 
+
+// TODO: Create an interface for the Candidate objects returned by the API
 interface Candidate {
-    id: number;
     name: string;
+    username: string;
+    location: string;
+    avatar: string;
     email: string;
-    phone: string;
-    experience: number;
-    skills: string[];
+    html_url: string;
+    company: string;
 }
 
-const Candidate: Candidate = {
-    id: 1,
+const candidate: Candidate = {
     name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '555-555-5555',
-    experience: 5,
-    skills: ['JavaScript', 'React', 'Node.js'],
+    username: 'johndoe',
+    location: 'New York, NY',
+    avatar: 'https://avatars.githubusercontent.com/u/1?v=4',
+    email: '',
+    html_url: '',
+    company: 'GitHub',
 };
 
-console.log(Candidate);
+console.log(candidate);
 
 type Candidate2 = {
-    id: number;
     name: string;
+    username: string;
+    location: string;
+    avatar: string;
     email: string;
-    phone: string;
-    experience: number;
-    skills: string[];
-};
+    html_url: string;
+    company: string;
+}
 
-const Candidate2: Candidate2 = {
-    id: 2,
+const candidate2: Candidate2 = {
     name: 'Jane Doe',
-    email: 'jane.doe@example.com',
-    phone: '555-555-5555',
-    experience: 5,
-    skills: ['JavaScript', 'React', 'Node.js'],
+    username: 'janedoe',
+    location: 'Los Angeles, CA',
+    avatar: 'https://avatars.githubusercontent.com/u/2?v=4',
+    email: '',
+    html_url: '',
+    company: 'GitHub',
 };
 
-console.log(Candidate2);
+console.log(candidate2);
 
 type Level = 'Junior' | 'Mid' | 'Senior';
 
 const juniorLevel: Level = 'Junior';
 console.log(juniorLevel);
 
+// interface Employee {
+//     candidate: Candidate;
+// }
+
+// const Candidate: React.FC<Employee> = ({ candidate }) => {
+//     return (
+//         <div className="candidate">
+//             <img src={candidate.avatar} alt={candidate.name} />
+//             <div className="candidate-info">
+//                 <h2>{candidate.name}</h2>
+//                 <p>{candidate.location}</p>
+//                 <p>{candidate.company}</p>
+//                 <a href={candidate.html_url}>{candidate.username}</a>
+//                 <p>{candidate.email}</p>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default Candidate;
+
 type Description = string;
-const description1 : Description = 'Description 1';
+const description1: Description = 'Description one';
 console.log(description1);
 
 interface Description2 {
@@ -76,12 +103,12 @@ const person1: Person = {
 
 console.log(person1);
 
-interface Reportable {
-    getDetails(): string;
-    getSummary(): string;
+interface Reporrtable {
+    getDetails: () => string;
+    getSummary: () => string;
 }
 
-class Company implements Reportable {
+class Company implements Reporrtable {
     private name: string;
     private numEmployees: number;
 
@@ -99,13 +126,13 @@ class Company implements Reportable {
 
     getNumEmployees(): number {
         return this.numEmployees;
-    }
+    }   
 
     getDetails(): string {
-        return '${this.name} has ${this.numEmployees} employees';
+        return `${this.name}, ${this.numEmployees}`;
     }
 
     getSummary(): string {
-        return 'This company ${this.name} has ${this.numEmployees} employees';
+        return `Company: ${this.name} has ${this.numEmployees} employees`;
     }
 }
