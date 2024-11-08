@@ -1,8 +1,59 @@
-import { useState, useEffect } from 'react';
-import { searchGithub, searchGithubUser } from '../api/API';
+import { useState, useEffect } from "react";
+import { searchGithub, searchGithubUser } from "../api/API";
+import type Candidate from "../interfaces/Candidate.interface";
+import CandidateCard from "../components/CandidateCard";
 
 const CandidateSearch = () => {
-  return <h1>Candidate Search</h1>;
+  const [currentCandidate, setCurrentCandidate] = useState<Candidate>({
+    name: "",
+    login: "",
+    location: "",
+    avatar_url: "",
+    email: "",
+    html_url: "",
+    company: "",
+    bio: "",
+  });
+  const [candidateList, setCandidateList] = useState<Candidate[]>([]);
+
+  useEffect(() => {
+    searchGithub().then((data) => {
+      setCandidateList(data);
+      // searchGithubUser(data[0].login).then((userData) => {
+        searchGithubUser('seanfdolan').then((userData) => {
+        setCurrentCandidate(userData);
+        console.log(candidateList,currentCandidate)
+      });
+    });
+  },[]);
+
+  const handleSelection = (isSelected: boolean) => {
+    if (isSelected) {
+       const savedCandidates: Candidate[] = JSON.parse(
+        localStorage.getItem("SavedCandidates") || "[]"
+      );
+      savedCandidates.push(currentCandidate);
+      localStorage.setItem("SavedCandidates", JSON.stringify(savedCandidates));
+    } else {
+      // searchGithub().then((data) => {
+      //   setCandidateList(data);
+      //   searchGithubUser(data[0].login).then((userData) => {
+      //     setCurrentCandidate(userData);
+      //   });
+     // });
+     console.log("Candidate not selected")
+    }
+  };
+
+  return (
+    <>
+      <h1>Candidate Search</h1>
+      <CandidateCard
+       currentUser={currentCandidate}
+      selection={handleSelection} />
+    </>
+  );
+
 };
 
 export default CandidateSearch;
