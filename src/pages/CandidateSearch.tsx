@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { searchGithub, searchGithubUser } from "../api/API";
+import { searchGithub, searchGithubUser } from "../api/API";  //add searchGithub
 import type Candidate from "../interfaces/Candidate.interface";
 import CandidateCard from "../components/CandidateCard";
 
@@ -16,11 +16,25 @@ const CandidateSearch = () => {
   });
   const [candidateList, setCandidateList] = useState<Candidate[]>([]);
 
+  // useEffect(() => {
+  //   searchGithubUser('seanfdolan').then((userData) => {
+  //   setCurrentCandidate(userData);
+  //   console.log(candidateList,currentCandidate);
+  // });
+  // },[]);
+
+  // useEffect(() => {
+  //   searchGithub().then((data) => {
+  //     setCurrentCandidate(data[0]);
+  //     console.log(candidateList, currentCandidate);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    searchGithub().then((data) => {
+      searchGithub().then((data) => {
       setCandidateList(data);
-      // searchGithubUser(data[0].login).then((userData) => {
-        searchGithubUser('seanfdolan').then((userData) => {
+      searchGithubUser(data[0].login).then((userData) => {
+        // searchGithubUser('seanfdolan').then((userData) => {
         setCurrentCandidate(userData);
         console.log(candidateList,currentCandidate)
       });
@@ -35,12 +49,7 @@ const CandidateSearch = () => {
       savedCandidates.push(currentCandidate);
       localStorage.setItem("SavedCandidates", JSON.stringify(savedCandidates));
     } else {
-      // searchGithub().then((data) => {
-      //   setCandidateList(data);
-      //   searchGithubUser(data[0].login).then((userData) => {
-      //     setCurrentCandidate(userData);
-      //   });
-     // });
+      
      console.log("Candidate not selected")
     }
   };
